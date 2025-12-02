@@ -1,0 +1,890 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Byrekito - Il Triangolo che ti Conquista</title>
+    <style>
+        :root {
+            --color-primary: #d4541f;
+            --color-primary-dark: #b84218;
+            --color-secondary: #f4a460;
+            --color-accent: #8b4513;
+            --color-light: #fef5f0;
+            --color-white: #ffffff;
+            --color-text: #2c1810;
+            --font-family: 'Georgia', serif;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: var(--font-family);
+            background-color: var(--color-light);
+            color: var(--color-text);
+            line-height: 1.6;
+        }
+
+        /* Header */
+        header {
+            background: linear-gradient(135deg, var(--color-primary) 0%, var(--color-secondary) 100%);
+            padding: 20px 0;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+            position: sticky;
+            top: 0;
+            z-index: 100;
+        }
+
+        .header-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo-section {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+
+        .logo {
+            width: 70px;
+            height: 70px;
+            background: rgba(255, 255, 255, 0.1);
+            clip-path: none;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: bold;
+            color: white;
+            font-size: 24px;
+            border-radius: 8px;
+            overflow: hidden;
+            padding: 5px;
+            box-sizing: border-box;
+        }
+
+        .logo img {
+            width: 100%;
+            height: 100%;
+            object-fit: contain;
+        }
+
+        h1 {
+            color: var(--color-white);
+            font-size: 28px;
+            font-style: italic;
+        }
+
+        .tagline {
+            color: rgba(255,255,255,0.95);
+            font-size: 12px;
+            font-style: italic;
+            margin-top: 4px;
+        }
+
+        nav {
+            display: flex;
+            gap: 25px;
+            align-items: center;
+        }
+
+        nav a {
+            color: var(--color-white);
+            text-decoration: none;
+            font-size: 14px;
+            font-weight: 500;
+            transition: opacity 0.3s;
+        }
+
+        nav a:hover {
+            opacity: 0.8;
+        }
+
+        .cart-icon {
+            background: rgba(255,255,255,0.2);
+            padding: 8px 12px;
+            border-radius: 4px;
+            cursor: pointer;
+            transition: background 0.3s;
+        }
+
+        .cart-icon:hover {
+            background: rgba(255,255,255,0.3);
+        }
+
+        /* Hero Section */
+        .hero {
+            background: linear-gradient(135deg, rgba(212, 84, 31, 0.95) 0%, rgba(244, 164, 96, 0.95) 100%), 
+                        url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 400"><polygon points="0,0 1200,0 1200,400 0,400" fill="none"/></svg>');
+            background-size: cover;
+            padding: 80px 20px;
+            text-align: center;
+            color: var(--color-white);
+        }
+
+        .hero h2 {
+            font-size: 48px;
+            margin-bottom: 15px;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.2);
+        }
+
+        .hero p {
+            font-size: 18px;
+            margin-bottom: 30px;
+            max-width: 600px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+
+        .cta-button {
+            display: inline-block;
+            background-color: var(--color-white);
+            color: var(--color-primary);
+            padding: 14px 32px;
+            border-radius: 50px;
+            text-decoration: none;
+            font-weight: bold;
+            font-size: 16px;
+            transition: transform 0.3s, box-shadow 0.3s;
+            border: none;
+            cursor: pointer;
+            font-family: var(--font-family);
+        }
+
+        .cta-button:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 12px rgba(0,0,0,0.2);
+        }
+
+        /* Products Section */
+        .products-section {
+            max-width: 1200px;
+            margin: 60px auto;
+            padding: 0 20px;
+        }
+
+        .section-title {
+            text-align: center;
+            font-size: 36px;
+            color: var(--color-primary);
+            margin-bottom: 50px;
+            position: relative;
+            padding-bottom: 15px;
+        }
+
+        .section-title::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 60px;
+            height: 3px;
+            background: linear-gradient(90deg, var(--color-secondary), var(--color-primary));
+            border-radius: 2px;
+        }
+
+        .products-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 30px;
+            margin-bottom: 40px;
+        }
+
+        .product-card {
+            background: var(--color-white);
+            border-radius: 8px;
+            overflow: hidden;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.08);
+            transition: transform 0.3s, box-shadow 0.3s;
+            border-left: 4px solid var(--color-primary);
+        }
+
+        .product-card:hover {
+            transform: translateY(-8px);
+            box-shadow: 0 8px 20px rgba(212, 84, 31, 0.15);
+        }
+
+        .product-header {
+            background: linear-gradient(135deg, var(--color-primary) 0%, var(--color-secondary) 100%);
+            padding: 15px;
+            text-align: center;
+        }
+
+        .product-icon {
+            width: 60px;
+            height: 60px;
+            margin: 0 auto 10px;
+            background: rgba(255,255,255,0.2);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 28px;
+        }
+
+        .product-name {
+            color: var(--color-white);
+            font-size: 20px;
+            font-weight: bold;
+        }
+
+        .product-body {
+            padding: 20px;
+        }
+
+        .product-description {
+            color: #666;
+            font-size: 14px;
+            margin-bottom: 15px;
+            line-height: 1.5;
+        }
+
+        .product-price {
+            font-size: 24px;
+            color: var(--color-primary);
+            font-weight: bold;
+            margin-bottom: 15px;
+        }
+
+        .add-to-cart {
+            width: 100%;
+            background: var(--color-primary);
+            color: var(--color-white);
+            border: none;
+            padding: 10px;
+            border-radius: 4px;
+            cursor: pointer;
+            font-weight: bold;
+            transition: background 0.3s;
+            font-family: var(--font-family);
+        }
+
+        .add-to-cart:hover {
+            background: var(--color-primary-dark);
+        }
+
+        /* About Section */
+        .about-section {
+            background: linear-gradient(135deg, var(--color-light) 0%, #fff9f5 100%);
+            padding: 60px 20px;
+            margin: 60px 0;
+        }
+
+        .about-container {
+            max-width: 1000px;
+            margin: 0 auto;
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 40px;
+            align-items: center;
+        }
+
+        .about-text h3 {
+            font-size: 28px;
+            color: var(--color-primary);
+            margin-bottom: 20px;
+        }
+
+        .about-text p {
+            color: #555;
+            margin-bottom: 15px;
+            line-height: 1.8;
+        }
+
+        .about-features {
+            list-style: none;
+            margin-top: 25px;
+        }
+
+        .about-features li {
+            padding: 8px 0;
+            padding-left: 25px;
+            position: relative;
+            color: #555;
+        }
+
+        .about-features li::before {
+            content: '▲';
+            position: absolute;
+            left: 0;
+            color: var(--color-primary);
+            font-size: 12px;
+        }
+
+        .about-image {
+            background: linear-gradient(135deg, var(--color-primary) 0%, var(--color-secondary) 100%);
+            height: 300px;
+            border-radius: 8px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 100px;
+        }
+
+        /* Location Section */
+        .location-section {
+            background: var(--color-light);
+            padding: 60px 20px;
+            margin: 60px 0;
+        }
+
+        .location-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 40px;
+            align-items: center;
+        }
+
+        .location-info h3 {
+            font-size: 32px;
+            color: var(--color-primary);
+            margin-bottom: 20px;
+        }
+
+        .map-placeholder {
+            border-radius: 8px;
+            overflow: hidden;
+        }
+
+        /* Promotions Section */
+        .promos-section {
+            background: linear-gradient(135deg, rgba(212, 84, 31, 0.05) 0%, rgba(244, 164, 96, 0.05) 100%);
+            padding: 60px 20px;
+            margin: 60px 0;
+        }
+
+        .promos-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 25px;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .promo-card {
+            background: var(--color-white);
+            border-radius: 8px;
+            padding: 25px;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.08);
+            border-top: 4px solid var(--color-secondary);
+            position: relative;
+            transition: transform 0.3s, box-shadow 0.3s;
+        }
+
+        .promo-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 8px 20px rgba(212, 84, 31, 0.15);
+        }
+
+        .promo-badge {
+            position: absolute;
+            top: -12px;
+            right: 15px;
+            background: linear-gradient(135deg, var(--color-primary) 0%, var(--color-secondary) 100%);
+            color: white;
+            padding: 6px 12px;
+            border-radius: 20px;
+            font-size: 12px;
+            font-weight: bold;
+        }
+
+        .promo-card h4 {
+            color: var(--color-primary);
+            font-size: 20px;
+            margin: 15px 0 10px;
+        }
+
+        .promo-card p {
+            color: #666;
+            margin: 0;
+            line-height: 1.6;
+        }
+
+        /* Prenotazioni Section */
+        .prenotazioni-section {
+            background: linear-gradient(135deg, var(--color-primary) 0%, var(--color-secondary) 100%);
+            padding: 60px 20px;
+            text-align: center;
+            color: white;
+            margin: 60px 0;
+        }
+
+        .prenotazioni-section h2 {
+            font-size: 36px;
+            margin-bottom: 20px;
+            color: white;
+        }
+
+        .prenotazioni-section p {
+            font-size: 16px;
+            margin-bottom: 30px;
+            max-width: 600px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+
+        .booking-buttons {
+            display: flex;
+            gap: 15px;
+            justify-content: center;
+            flex-wrap: wrap;
+        }
+
+        .booking-btn {
+            display: inline-block;
+            background: white;
+            color: var(--color-primary);
+            padding: 12px 25px;
+            border-radius: 50px;
+            text-decoration: none;
+            font-weight: bold;
+            transition: transform 0.3s, box-shadow 0.3s;
+            border: none;
+            cursor: pointer;
+            font-family: var(--font-family);
+            font-size: 14px;
+        }
+
+        .booking-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 12px rgba(0,0,0,0.2);
+        }
+
+        /* Footer */
+        footer {
+            background: var(--color-text);
+            color: var(--color-white);
+            padding: 40px 20px;
+            text-align: center;
+            margin-top: 60px;
+        }
+
+        .footer-content {
+            max-width: 1200px;
+            margin: 0 auto;
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 30px;
+            margin-bottom: 30px;
+        }
+
+        .footer-section h4 {
+            color: var(--color-secondary);
+            margin-bottom: 15px;
+            font-size: 16px;
+        }
+
+        .footer-section p, .footer-section a {
+            font-size: 14px;
+            color: #ddd;
+            margin-bottom: 8px;
+            text-decoration: none;
+        }
+
+        .footer-section a:hover {
+            color: var(--color-secondary);
+        }
+
+        .footer-bottom {
+            border-top: 1px solid rgba(255,255,255,0.1);
+            padding-top: 20px;
+            color: #999;
+            font-size: 13px;
+        }
+
+        .social-links {
+            display: flex;
+            justify-content: center;
+            gap: 15px;
+            margin-top: 15px;
+        }
+
+        .social-links a {
+            display: inline-block;
+            width: 36px;
+            height: 36px;
+            background: var(--color-primary);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 18px;
+            transition: background 0.3s;
+        }
+
+        .social-links a:hover {
+            background: var(--color-secondary);
+        }
+
+        /* Modal */
+        .modal {
+            display: none;
+            position: fixed;
+            z-index: 1000;
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0,0,0,0.5);
+        }
+
+        .modal-content {
+            background-color: var(--color-white);
+            margin: 10% auto;
+            padding: 30px;
+            border-radius: 8px;
+            width: 90%;
+            max-width: 500px;
+            box-shadow: 0 8px 20px rgba(0,0,0,0.2);
+        }
+
+        .modal-close {
+            color: #999;
+            float: right;
+            font-size: 28px;
+            font-weight: bold;
+            cursor: pointer;
+            transition: color 0.3s;
+        }
+
+        .modal-close:hover {
+            color: var(--color-primary);
+        }
+
+        .modal h2 {
+            color: var(--color-primary);
+            margin-bottom: 20px;
+        }
+
+        .modal-item {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 10px 0;
+            border-bottom: 1px solid #eee;
+        }
+
+        .modal-item:last-child {
+            border-bottom: none;
+        }
+
+        .modal-total {
+            text-align: right;
+            font-size: 20px;
+            color: var(--color-primary);
+            font-weight: bold;
+            margin-top: 20px;
+            padding-top: 20px;
+            border-top: 2px solid var(--color-primary);
+        }
+
+        .checkout-btn {
+            width: 100%;
+            background: var(--color-primary);
+            color: var(--color-white);
+            padding: 12px;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            font-weight: bold;
+            font-size: 16px;
+            margin-top: 20px;
+            transition: background 0.3s;
+            font-family: var(--font-family);
+        }
+
+        .checkout-btn:hover {
+            background: var(--color-primary-dark);
+        }
+
+        .empty-cart {
+            text-align: center;
+            padding: 30px;
+            color: #999;
+        }
+
+        @media (max-width: 768px) {
+            .header-container {
+                flex-direction: column;
+                gap: 15px;
+            }
+
+            nav {
+                flex-direction: column;
+                gap: 10px;
+                width: 100%;
+            }
+
+            .hero h2 {
+                font-size: 32px;
+            }
+
+            .about-container {
+                grid-template-columns: 1fr;
+            }
+
+            .about-image {
+                height: 200px;
+                font-size: 60px;
+            }
+
+            .products-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .location-container {
+                grid-template-columns: 1fr;
+            }
+
+            .map-placeholder {
+                order: -1;
+            }
+
+            .booking-buttons {
+                flex-direction: column;
+            }
+
+            .booking-btn {
+                width: 100%;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Header -->
+    <header>
+        <div class="header-container">
+            <div class="logo-section">
+                <div class="logo">
+                    <img src="https://agi-prod-file-upload-public-main-use1.s3.amazonaws.com/292ae179-2a7c-431d-87a5-897e65eb8005" alt="Byrekito Logo">
+                </div>
+                <div>
+                    <h1>Byrekito</h1>
+                    <p class="tagline">Il Triangolo che ti Conquista</p>
+                </div>
+            </div>
+            <nav>
+                <a href="#prodotti">Prodotti</a>
+                <a href="#location">Location</a>
+                <a href="#prenotazioni">Prenota</a>
+                <a href="#contatti">Contatti</a>
+            </nav>
+        </div>
+    </header>
+
+    <!-- Hero Section -->
+    <section class="hero">
+        <h2>Byrek Fatto a Mano</h2>
+        <p>Ogni giorno prepariamo con amore i nostri byrek freschi: carnivori, vegetariani, vegani e dolci. Tradizione albanese, qualità garantita.</p>
+        <button class="cta-button" onclick="document.getElementById('location').scrollIntoView({behavior: 'smooth'})">🗺️ Vieni a Trovarci</button>
+    </section>
+
+    <!-- Products Section -->
+    <section id="prodotti" class="products-section">
+        <h2 class="section-title">I Nostri Prodotti</h2>
+        <p style="text-align: center; color: #666; margin-bottom: 40px; font-size: 16px;">
+            Ogni prodotto è preparato fresco nel nostro laboratorio - Ordina in loco o chiama per prenotare!
+        </p>
+        <div class="products-grid" id="productsGrid"></div>
+    </section>
+
+    <!-- Location Section -->
+    <section id="location" class="location-section">
+        <div class="location-container">
+            <div class="location-info">
+                <h3>Trovaci Qui</h3>
+                <p style="font-size: 18px; color: var(--color-primary); font-weight: bold; margin: 20px 0;">
+                    📍 Via della Tradizione, 123<br>
+                    <span style="font-size: 14px; color: #555;">Città, CAP 12345</span>
+                </p>
+                <p style="color: #666; margin-bottom: 20px; line-height: 1.8;">
+                    Siamo nel cuore della città, facile da raggiungere e con parcheggio disponibile. 
+                    Vieni a scoprire il nostro locale accogliente e assapora l'autentica cucina albanese!
+                </p>
+                <div style="background: linear-gradient(135deg, var(--color-primary) 0%, var(--color-secondary) 100%); 
+                            padding: 20px; border-radius: 8px; color: white; margin-top: 20px;">
+                    <h4 style="margin-bottom: 10px;">⏰ Orari di Apertura</h4>
+                    <p style="margin: 5px 0;"><strong>Lunedì - Venerdì:</strong> 11:00 - 22:00</p>
+                    <p style="margin: 5px 0;"><strong>Sabato:</strong> 12:00 - 23:00</p>
+                    <p style="margin: 5px 0;"><strong>Domenica:</strong> 12:00 - 22:00</p>
+                    <p style="margin: 10px 0 0; font-size: 12px; border-top: 1px solid rgba(255,255,255,0.3); padding-top: 10px;">
+                        Chiuso lunedì sera
+                    </p>
+                </div>
+                <a href="tel:+39123456789" class="cta-button" style="display: inline-block; margin-top: 20px;">
+                    📞 Chiama per Prenotare
+                </a>
+            </div>
+            <div class="map-placeholder">
+                <div style="width: 100%; height: 400px; background: linear-gradient(135deg, var(--color-primary) 0%, var(--color-secondary) 100%); 
+                            border-radius: 8px; display: flex; align-items: center; justify-content: center; color: white; font-size: 48px;">
+                    🗺️
+                </div>
+                <p style="text-align: center; margin-top: 10px; color: #999; font-size: 12px;">
+                    <a href="https://maps.google.com" target="_blank" style="color: var(--color-primary); text-decoration: underline;">
+                        Apri su Google Maps
+                    </a>
+                </p>
+            </div>
+        </div>
+    </section>
+
+    <!-- Promotions Section -->
+    <section class="promos-section">
+        <h2 class="section-title">Offerte Speciali</h2>
+        <div class="promos-grid">
+            <div class="promo-card">
+                <div class="promo-badge">⭐ NUOVO</div>
+                <h4>Menu Famiglia</h4>
+                <p>6 byrek assortiti + 2 dolci<br><span style="font-size: 18px; color: var(--color-primary); font-weight: bold;">€29,99</span></p>
+            </div>
+            <div class="promo-card">
+                <div class="promo-badge">🎉 PROMO</div>
+                <h4>Happy Hour</h4>
+                <p>Lunedì-Venerdì 16:00-18:00<br><span style="font-size: 18px; color: var(--color-primary); font-weight: bold;">-20% su tutto</span></p>
+            </div>
+            <div class="promo-card">
+                <div class="promo-badge">👥 CLUB</div>
+                <h4>Fedeltà</h4>
+                <p>Ogni 5 byrek uno GRATIS<br><span style="font-size: 18px; color: var(--color-primary); font-weight: bold;">Chiedi la card!</span></p>
+            </div>
+        </div>
+    </section>
+
+    <!-- About Section -->
+    <section id="chi-siamo" class="about-section">
+        <div class="about-container">
+            <div class="about-text">
+                <h3>La Magia del Byrek</h3>
+                <p>Byrekito nasce dalla passione per la cucina tradizionale albanese. Ogni byrek è preparato a mano nel giorno stesso con ingredienti freschi e selezionati.</p>
+                <p>La nostra missione è portare i sapori autentici della tradizione direttamente sulla vostra tavola.</p>
+                <ul class="about-features">
+                    <li>Ingredienti freschi e di qualità</li>
+                    <li>Preparati giornalmente a mano</li>
+                    <li>Ricette tradizionali autentiche</li>
+                    <li>Consegna veloce e affidabile</li>
+                    <li>Opzioni per tutti: carnivori, vegetariani, vegani</li>
+                </ul>
+            </div>
+            <div class="about-image">🥟</div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer id="contatti">
+        <div class="footer-content">
+            <div class="footer-section">
+                <h4>Contattaci</h4>
+                <p>📞 +39 123 456 7890</p>
+                <p>📧 info@byrekito.it</p>
+                <p>📍 Via della Tradizione, 123</p>
+            </div>
+            <div class="footer-section">
+                <h4>Orari</h4>
+                <p>Lun - Ven: 11:00 - 22:00</p>
+                <p>Sab - Dom: 12:00 - 23:00</p>
+            </div>
+            <div class="footer-section">
+                <h4>Seguici</h4>
+                <div class="social-links">
+                    <a href="#">f</a>
+                    <a href="#">📱</a>
+                    <a href="#">📸</a>
+                </div>
+            </div>
+        </div>
+        <div class="footer-bottom">
+            <p>&copy; 2025 Byrekito - Il Triangolo che ti Conquista. Tutti i diritti riservati.</p>
+        </div>
+    </footer>
+
+    <!-- Prenotazioni Section -->
+    <section id="prenotazioni" class="prenotazioni-section">
+        <h2>Prenota il Tuo Tavolo</h2>
+        <p>Non aspettare! Chiama o compila il form per riservare il tuo posto. Perfetto per cene aziendali, feste e riunioni.</p>
+        <div class="booking-buttons">
+            <a href="tel:+39123456789" class="booking-btn">📞 Chiama Subito</a>
+            <a href="mailto:info@byrekito.it?subject=Prenotazione%20Tavolo" class="booking-btn">✉️ Email</a>
+        </div>
+    </section>
+
+    <script>
+        const products = [
+            {
+                id: 1,
+                name: 'Byrek alla Carne',
+                description: 'Sfoglia croccante ripiena di carne macinata con cipolle e spezie',
+                price: 5.50,
+                icon: '🥩'
+            },
+            {
+                id: 2,
+                name: 'Byrek Vegetariano',
+                description: 'Byrek ripieno di verdure fresche, formaggio e ricotta',
+                price: 4.99,
+                icon: '🥬'
+            },
+            {
+                id: 3,
+                name: 'Byrek Vegano',
+                description: 'Specialità vegana con verdure di stagione e tofu',
+                price: 5.00,
+                icon: '🌱'
+            },
+            {
+                id: 4,
+                name: 'Byrek Dolce',
+                description: 'Sfoglia con crema dolce, noci e sciroppo di miele',
+                price: 4.50,
+                icon: '🍯'
+            },
+            {
+                id: 5,
+                name: 'Trrileçe',
+                description: 'Dolce tradizionale albanese a strati con crema e latte condensato',
+                price: 5.99,
+                icon: '🍰'
+            },
+            {
+                id: 6,
+                name: 'Ballokume',
+                description: 'Biscotti tradizionali albanesi croccanti e gustosi',
+                price: 3.99,
+                icon: '🍪'
+            }
+        ];
+
+        function renderProducts() {
+            const grid = document.getElementById('productsGrid');
+            grid.innerHTML = products.map(product => `
+                <div class="product-card">
+                    <div class="product-header">
+                        <div class="product-icon">${product.icon}</div>
+                        <div class="product-name">${product.name}</div>
+                    </div>
+                    <div class="product-body">
+                        <p class="product-description">${product.description}</p>
+                        <p class="product-price">€${product.price.toFixed(2)}</p>
+                        <button class="add-to-cart" onclick="alert('Vieni a trovarci per ordinare!')">
+                            Disponibile in Negozio
+                        </button>
+                    </div>
+                </div>
+            `).join('');
+        }
+
+        renderProducts();
+    </script>
+</body>
+</html>
